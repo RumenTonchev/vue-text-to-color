@@ -48,7 +48,6 @@
                     number = number - 975;
                     let disperseNumber = Math.floor((number * 4095) / 30);
                     let resultString = disperseNumber.toString(16).padStart(3, '0');
-                    console.log(resultString);
                     return `#${resultString}`;
                 } else {
                     return 'not valid';
