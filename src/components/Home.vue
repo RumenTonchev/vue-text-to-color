@@ -1,7 +1,8 @@
 <template>
     <div>
+        <h2 style="text-align: center">This part uses the microphone.</h2>
         <div class="text-to-speech" style="height: 0; overflow: hidden; padding: 0">
-            <vue-speech @onTranscriptionEnd="onEnd" lang="bg"/>
+            <vue-speech @onTranscriptionEnd="onEnd"/>
         </div>
         <div class="output-div">
             {{inputField2}}
@@ -13,8 +14,9 @@
             </template>
         </div>
         <hr>
+        <h2 style="text-align: center">This part uses the the input field bellow.</h2>
         <div class="input-div">
-            <input type="text" v-model="inputField">
+            <input type="text" v-model="inputField" style="width: 400px; padding: 5px">
         </div>
         <div class="output-div">
             <template v-for="letter of inputField" v-if="letterConvert(letter) !== 'not valid'">
@@ -46,14 +48,15 @@
                     return `#${resultString}`;
                 } else if (number >= 975 && number <= 1006){
                     number = number - 975;
-                    let disperseNumber = Math.floor((number * 4095) / 30);
+                    let disperseNumber = number * 4095;
+                    disperseNumber = Math.floor(disperseNumber / 30);
                     let resultString = disperseNumber.toString(16).padStart(3, '0');
                     return `#${resultString}`;
                 } else {
                     return 'not valid';
                 }
             },
-            onEnd({lastSentence, transcription}) {
+            onEnd({lastSentence}) {
                 this.inputField2 = lastSentence;
                 // `lastSentence` is the last sentence before the pause
                 // `transcription` is the full array of sentences
